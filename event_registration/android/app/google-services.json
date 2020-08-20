@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "980284315147",
+    "firebase_url": "https://fir-554e8.firebaseio.com",
+    "project_id": "fir-554e8",
+    "storage_bucket": "fir-554e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980284315147:android:1983953056022aa0ed590e",
+        "android_client_info": {
+          "package_name": "com.shamoilarsi.eventregistrations"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "980284315147-7eqe8mn52uv3ashjs1g4lg0unutmicgj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClZdUKCgq-dbJQxk_LZWMqAQi5PC1tH1c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "980284315147-7eqe8mn52uv3ashjs1g4lg0unutmicgj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

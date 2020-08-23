@@ -62,7 +62,7 @@ export default function RegisterScreen({ navigation, route }) {
           if (isPaid) {
             const data = {
               ...values,
-              volunteer: '', // user.displayName,
+              volunteer: user?.displayName,
               slot: new Date(event.slots[slot].toDate()).toLocaleString(),
             };
             const response = await registerParticipant(data, event.id);

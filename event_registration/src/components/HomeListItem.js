@@ -7,10 +7,12 @@ import { RFPercentage } from 'react-native-responsive-fontsize';
 export default function HomeListItem({ title, desc, logo }) {
   return (
     <View style={styles.outerContainer}>
-      <Image style={styles.image} source={{ uri: logo }} />
+      <View style={styles.imageContainer}>
+        <Image style={styles.image} source={{ uri: logo }} />
+      </View>
       <View style={styles.textContainer}>
         <Text style={Typography.title}>{title}</Text>
-        <Text style={Typography.desc} numberOfLines={4} ellipsizeMode="tail">
+        <Text style={Typography.desc} numberOfLines={3} ellipsizeMode="tail">
           {desc}
         </Text>
       </View>
@@ -21,14 +23,18 @@ export default function HomeListItem({ title, desc, logo }) {
 const styles = StyleSheet.create({
   outerContainer: {
     borderRadius: 15,
-    backgroundColor: '#00000010',
-    marginHorizontal: RFPercentage(2),
+    backgroundColor: '#f6f8fa',
     flexDirection: 'row',
+    marginBottom: RFPercentage(2),
+    // elevation: 2,
   },
-  image: { width: 120, height: 120, borderRadius: 10 },
+  image: { width: 90, height: 90, borderRadius: 10 },
   textContainer: {
-    marginHorizontal: RFPercentage(2),
-    marginVertical: RFPercentage(1),
+    marginHorizontal: RFPercentage(2.3),
+    marginVertical: RFPercentage(1.5),
     flex: 1,
+  },
+  imageContainer: {
+    justifyContent: 'center',
   },
 });

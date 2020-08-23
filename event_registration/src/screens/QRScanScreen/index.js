@@ -25,19 +25,18 @@ export default function QRScanScreen() {
   const onSubmit = (code) => {
     console.log(code);
     const [eventId, id] = code.split('/');
-    if (registrations) {
-      console.log(registrations, registrations[eventId]);
-      if (id in registrations[eventId]) {
-        console.log('aaja bhai', registrations[eventId][id]);
-        setSuccessfullyRead(true);
-        setRegistrationData(registrations[eventId][id]);
-      } else {
-        console.log('fuck off you bitch');
-      }
-    } else {
-      console.log('not an admin sorry');
+    if (!registrations) {
+      alert("you're not an admin. not allowed get lost");
+      return;
     }
-    return true;
+    console.log(registrations, registrations[eventId]);
+    if (id in registrations[eventId]) {
+      console.log('aaja bhai', registrations[eventId][id]);
+      setSuccessfullyRead(true);
+      setRegistrationData(registrations[eventId][id]);
+    } else {
+      console.log(" you didn't register. get lost pls");
+    }
   };
 
   return (

@@ -11,7 +11,7 @@ import DataContext from './src/contexts/DataContext';
 const App = () => {
   const [user, setUser] = useState(null);
   const [firebaseDetails, setFirebaseDetails] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(true); //set false here by default
   const [isConnected, setIsConnected] = useState(true);
   const [registrations, setRegistrations] = useState(null);
 
@@ -47,6 +47,7 @@ const App = () => {
     })();
   }, []);
 
+  // uncomment this to setAdmin when using GoogleLogin
   // useEffect(() => {
   //   if (firebaseDetails && user)
   //     setIsAdmin(firebaseDetails.admins.includes(user.email));

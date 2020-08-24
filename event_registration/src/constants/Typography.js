@@ -12,6 +12,11 @@ const Typography = {
     color: Colors.secondary.title,
     fontSize: RFPercentage(2.5),
   },
+  eventDesc: {
+    fontFamily: 'Poppins-Regular',
+    color: Colors.secondary.title,
+    fontSize: RFPercentage(1.9),
+  },
   desc: {
     fontFamily: 'Poppins-Regular',
     color: Colors.secondary.title,

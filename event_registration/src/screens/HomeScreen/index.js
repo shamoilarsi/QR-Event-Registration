@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useContext } from 'react';
 import {
   StyleSheet,
@@ -33,24 +34,33 @@ export default function HomeScreen({ navigation }) {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const eventRegistrations = Object.values(registrations);
         const eventIDs = Object.keys(registrations);
-        let exportList = [];
 
         eventRegistrations.forEach((val, idx) => {
           const regID = Object.keys(val);
           const regData = Object.values(val);
           const sheet = [];
 
-          regData.forEach((val, idx) => {
-            sheet.push({ ...val, registrationID: regID[idx] });
+          regData.forEach((data, index) => {
+            sheet.push({ ...data, registrationID: regID[index] });
           });
-          exportList.push({ [eventIDs[idx]]: sheet });
 
           // let exportString = 'data:text/csv;charset=utf-8,';
           let exportString =
             'Name,Email,Number,College,Slot,Attended,Volunteer,RegID,\r\n';
-          sheet.forEach((val) => {
-            exportString += `${val.name},${val.email},${val.number},${val.college},${val.slot},${val.attended},${val.volunteer},${val.registrationID},\r\n`;
-          });
+          sheet.forEach(
+            ({
+              name,
+              email,
+              number,
+              college,
+              slot,
+              attended,
+              volunteer,
+              registrationID,
+            }) => {
+              exportString += `${name},${email},${number},${college},${slot},${attended},${volunteer},${registrationID},\r\n`;
+            },
+          );
 
           writeFile(exportDirectory + `/${eventIDs[idx]}.csv`, exportString)
             .then(() =>
@@ -70,24 +80,13 @@ export default function HomeScreen({ navigation }) {
   };
 
   return (
-    <View
-      style={{
-        height: '100%',
-        paddingVertical: 20,
-        backgroundColor: '#ffffff',
-      }}>
-      <View style={{ marginHorizontal: 15 }}>
-        <View style={{ alignItems: 'center' }}>
-          <Text style={{ ...Typography.heading, marginBottom: 30 }}>
-            Welcome to Tectonic 2021
-          </Text>
+    <View style={styles.outerContainer}>
+      <View style={styles.innerContainer}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>Event Registration</Text>
         </View>
         {isAdmin && (
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-            }}>
+          <View style={styles.adminOptionContainer}>
             <TouchableOpacity
               style={styles.adminBtn}
               onPress={() => {
@@ -107,7 +106,7 @@ export default function HomeScreen({ navigation }) {
         )}
 
         {firebaseDetails ? (
-          <View style={{ marginVertical: 20 }}>
+          <View style={styles.mainContainer}>
             <Text style={Typography.label}>
               Here are the events organised this year
             </Text>
@@ -126,7 +125,7 @@ export default function HomeScreen({ navigation }) {
             ))}
           </View>
         ) : (
-          <View style={{ alignItems: 'center', marginTop: 30 }}>
+          <View style={styles.loading}>
             <Text style={Typography.title}>Loading...</Text>
           </View>
         )}
@@ -136,6 +135,23 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    height: '100%',
+    paddingVertical: 20,
+    backgroundColor: '#ffffff',
+  },
+  innerContainer: { marginHorizontal: 15 },
+  headerContainer: {
+    alignItems: 'center',
+  },
+  header: {
+    ...Typography.heading,
+    marginBottom: 30,
+  },
+  adminOptionContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
   adminBtn: {
     backgroundColor: '#03A9F4',
     paddingVertical: 5,
@@ -147,4 +163,6 @@ const styles = StyleSheet.create({
     ...Typography.label,
     color: '#fff',
   },
+  mainContainer: { marginVertical: 20 },
+  loading: { alignItems: 'center', marginTop: 30 },
 });

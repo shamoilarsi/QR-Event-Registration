@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
@@ -6,6 +7,7 @@ import {
   TextInput,
   Button,
   ScrollView,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { Picker } from '@react-native-community/picker';
@@ -36,29 +38,41 @@ export default function RegisterScreen({ navigation, route }) {
   const [slot, setSlot] = useState(0);
 
   const titles = [
-    { title: 'Enter Name', formId: 'name' },
-    { title: 'Enter Number', formId: 'number', keyboardType: 'numeric' },
-    { title: 'Enter Email', formId: 'email', keyboardType: 'email-address' },
-    { title: 'Enter College', formId: 'college' },
+    { title: 'Enter Name', formId: 'name', placeHolder: 'Shamoil Arsiwala' },
+    {
+      title: 'Enter Number',
+      formId: 'number',
+      keyboardType: 'numeric',
+      placeHolder: '1234567890',
+    },
+    {
+      title: 'Enter Email',
+      formId: 'email',
+      keyboardType: 'email-address',
+      placeHolder: 'shamoilarsiwala16@gmail.com',
+    },
+    {
+      title: 'Enter College',
+      formId: 'college',
+      placeHolder: 'Sinhgad Academy of Engineering',
+    },
   ];
 
   return (
-    <ScrollView style={{ paddingHorizontal: 10 }}>
-      <View style={{ alignItems: 'center', marginTop: 20 }}>
-        <Text style={{ color: 'black', ...Typography.title }}>
-          Registration form for
-        </Text>
+    <ScrollView style={styles.outerContainer}>
+      <View style={styles.innerContainer}>
+        <Text style={Typography.title}>Registration form for</Text>
         <Text style={Typography.heading}>{event.title}</Text>
       </View>
       <Formik
         initialValues={{
-          name: 'shamoil',
-          college: 'sae',
-          number: '0987654321',
-          email: 'shamoil@ad.vc',
+          name: 'raj mehrotra',
+          college: 'saoe',
+          number: '7594137638',
+          email: 'raj@gmail.com',
         }}
         validationSchema={submitSchema}
-        onSubmit={async (values, action) => {
+        onSubmit={async (values) => {
           if (isPaid) {
             const data = {
               ...values,
@@ -66,13 +80,15 @@ export default function RegisterScreen({ navigation, route }) {
               slot: new Date(event.slots[slot].toDate()).toLocaleString(),
             };
             const response = await registerParticipant(data, event.id);
-            if (response)
+            if (response) {
               navigation.navigate('QRDisplayScreen', {
                 id: response,
-                details: values,
+                details: data,
                 event,
               });
-            else console.log('false hua');
+            } else {
+              alert('Participant could not be registered!');
+            }
           } else {
             alert('Payment is not completed!');
           }
@@ -81,20 +97,21 @@ export default function RegisterScreen({ navigation, route }) {
           <View>
             {titles.map((val, index) => (
               <View key={index}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: 20,
-                  }}>
-                  <Text style={styles.labels}>{val.title}</Text>
-                  <Text style={styles.errorText}>
-                    {props.touched[val.formId] && props.errors[val.formId]}
+                <View style={styles.mainForm}>
+                  <Text
+                    style={
+                      props.touched[val.formId] && props.errors[val.formId]
+                        ? styles.errorText
+                        : styles.labels
+                    }>
+                    {(props.touched[val.formId] && props.errors[val.formId]) ||
+                      val.title}
                   </Text>
                 </View>
                 <TextInput
                   style={styles.input}
                   value={props.values[val.formId]}
+                  placeholder={val.placeHolder}
                   keyboardType={val.keyboardType}
                   onBlur={props.handleBlur(val.formId)}
                   onChangeText={props.handleChange(val.formId)}
@@ -102,17 +119,15 @@ export default function RegisterScreen({ navigation, route }) {
               </View>
             ))}
 
-            <View
-              style={{
-                marginTop: 20,
-              }}>
+            <View style={styles.slotSection}>
               <Text style={styles.labels}>Select Slot</Text>
               <Picker
                 selectedValue={new Date(
                   event.slots[slot].toDate(),
                 ).toLocaleString()}
-                style={{ width: '100%' }}
-                onValueChange={(itemValue, itemIndex) => setSlot(itemIndex)}>
+                onValueChange={(_, itemIndex) => {
+                  setSlot(itemIndex);
+                }}>
                 {event.slots.map((val, index) => (
                   <Picker.Item
                     key={index}
@@ -123,27 +138,18 @@ export default function RegisterScreen({ navigation, route }) {
               </Picker>
             </View>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginTop: 20,
-              }}>
-              <CheckBox
-                disabled={false}
-                value={isPaid}
-                onValueChange={(val) => setIsPaid(val)}
-              />
-              <Text style={[styles.labels, { marginTop: 0 }]}>
-                Paid ₹{event.price}?
-              </Text>
-            </View>
+            <TouchableWithoutFeedback onPress={() => setIsPaid((val) => !val)}>
+              <View style={styles.isPaidSection}>
+                <CheckBox
+                  disabled={false}
+                  value={isPaid}
+                  onValueChange={(val) => setIsPaid(val)}
+                />
+                <Text style={styles.labels}>Paid ₹{event.price}?</Text>
+              </View>
+            </TouchableWithoutFeedback>
 
-            <Button
-              color="maroon"
-              title="Submit"
-              onPress={props.handleSubmit}
-            />
+            <Button title="Submit" onPress={props.handleSubmit} />
           </View>
         )}
       </Formik>
@@ -152,15 +158,31 @@ export default function RegisterScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
+  outerContainer: { paddingHorizontal: 10 },
   input: {
-    backgroundColor: Colors.primary.main + '40',
-    borderRadius: 20,
-    paddingLeft: 20,
+    borderBottomColor: Colors.primary.main,
+    borderBottomWidth: 2,
+    padding: 0,
   },
-  labels: { ...Typography.label },
+  innerContainer: { alignItems: 'center', marginTop: 20 },
+  labels: {
+    ...Typography.label,
+    textTransform: 'capitalize',
+  },
   errorText: {
     ...Typography.label,
     color: 'red',
-    paddingLeft: 20,
+    textTransform: 'capitalize',
+  },
+  slotSection: {
+    marginTop: 30,
+  },
+  isPaidSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  mainForm: {
+    marginTop: 20,
   },
 });

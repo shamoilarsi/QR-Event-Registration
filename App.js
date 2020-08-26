@@ -83,6 +83,13 @@ const App = () => {
     return false;
   };
 
+  const setAttended = async (eventId, id) => {
+    await Firestore()
+      .collection('demo-event')
+      .doc('registrations')
+      .set({ [eventId]: { [id]: { attended: true } } }, { merge: true });
+  };
+
   return (
     <>
       <DataContext.Provider
@@ -93,6 +100,7 @@ const App = () => {
           registerParticipant,
           isConnected,
           registrations,
+          setAttended,
         }}>
         <AppNavigator />
         <NoInternet isConnected={isConnected} />

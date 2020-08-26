@@ -36,6 +36,7 @@ export default function RegisterScreen({ navigation, route }) {
 
   const [isPaid, setIsPaid] = useState(false);
   const [slot, setSlot] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const titles = [
     { title: 'Enter Name', formId: 'name', placeHolder: 'Shamoil Arsiwala' },
@@ -73,15 +74,18 @@ export default function RegisterScreen({ navigation, route }) {
         }}
         validationSchema={submitSchema}
         onSubmit={async (values) => {
+          setIsSubmitting(true);
+          console.log('aaya');
           if (isPaid) {
             const data = {
               ...values,
               volunteer: user?.displayName,
+              event: event.title,
               slot: new Date(event.slots[slot].toDate()).toLocaleString(),
             };
             const response = await registerParticipant(data, event.id);
             if (response) {
-              navigation.navigate('QRDisplayScreen', {
+              await navigation.navigate('QRDisplayScreen', {
                 id: response,
                 details: data,
                 event,
@@ -149,7 +153,15 @@ export default function RegisterScreen({ navigation, route }) {
               </View>
             </TouchableWithoutFeedback>
 
-            <Button title="Submit" onPress={props.handleSubmit} />
+            <Button
+              title="Submit"
+              disabled={isSubmitting}
+              onPress={() => {
+                if (!isSubmitting) {
+                  props.handleSubmit();
+                }
+              }}
+            />
           </View>
         )}
       </Formik>

@@ -35,7 +35,7 @@ export default function QRDisplayScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  outerContainer: { height: '100%' },
+  outerContainer: { height: '100%', backgroundColor: '#fff' },
   innerContainer: { alignItems: 'center', marginTop: 30 },
   idText: { ...Typography.label, marginTop: 20 },
   name: { ...Typography.heading, textTransform: 'capitalize' },

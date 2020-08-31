@@ -2,6 +2,8 @@
 
 A QR based registration system for events and competitions!
 
+### Screenshots
+
 ### Tech Stack and Packages used
 
 - React Native (Tested on Android only)
@@ -32,10 +34,13 @@ A QR based registration system for events and competitions!
 1. Currently sign-in method is anonymous. Consider using Google Auth for sign-in. [Learn more](https://rnfirebase.io/auth/social-auth#google)
 2. Add the `google-services.json` file in android/app to link to your Firestore. [Learn more](https://rnfirebase.io/#2-android-setup)
 
+#### Firestore Schema
+
+
 ### To-Do
 
 - A better and consistent UI/UX.
-- Notify registrant with the unique QR code and the registration id.
+- Notify registrant with the unique QR code and the registration id via email or SMS.
 - Add a screen to view report.
 - Find a better method of exporting the report.
 - Option to call the coordinators of events directly.

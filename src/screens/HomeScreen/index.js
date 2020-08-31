@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   PermissionsAndroid,
   ToastAndroid,
+  ScrollView,
 } from 'react-native';
 import Typography from '../../constants/Typography';
 import { writeFile, DownloadDirectoryPath, mkdir } from 'react-native-fs';
@@ -98,7 +99,7 @@ export default function HomeScreen({ navigation }) {
             <TouchableOpacity
               style={styles.adminBtn}
               onPress={() => {
-                navigation.navigate('QRScanScreen', {});
+                navigation.navigate('QRScan', {});
               }}>
               <Text style={styles.adminBtnText}>Scan</Text>
             </TouchableOpacity>
@@ -111,18 +112,20 @@ export default function HomeScreen({ navigation }) {
               Here are the events organised this year
             </Text>
 
-            {events.map((val, idx) => (
-              <TouchableOpacity
-                key={idx}
-                onPress={() => navigation.navigate('Event', { event: val })}
-                activeOpacity={0.6}>
-                <ListItem
-                  logo={val.image}
-                  title={val.title}
-                  desc={val.description}
-                />
-              </TouchableOpacity>
-            ))}
+            <ScrollView>
+              {events.map((val, idx) => (
+                <TouchableOpacity
+                  key={idx}
+                  onPress={() => navigation.navigate('Event', { event: val })}
+                  activeOpacity={0.6}>
+                  <ListItem
+                    logo={val.image}
+                    title={val.title}
+                    desc={val.description}
+                  />
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
           </View>
         ) : (
           <View style={styles.loading}>

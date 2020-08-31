@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     marginBottom: RFPercentage(2),
     // elevation: 2,
   },
-  image: { width: 90, height: 90, borderRadius: 10 },
+  image: { width: 90, height: 90, borderRadius: 10, marginLeft: 10 },
   textContainer: {
     marginHorizontal: RFPercentage(2.3),
     marginVertical: RFPercentage(1.5),

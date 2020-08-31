@@ -18,8 +18,8 @@ export default function AppNavigator() {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Event" component={Event} />
         <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="QRDisplayScreen" component={QRDisplayScreen} />
-        <Stack.Screen name="QRScanScreen" component={QRScanScreen} />
+        <Stack.Screen name="QRDisplay" component={QRDisplayScreen} />
+        <Stack.Screen name="QRScan" component={QRScanScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

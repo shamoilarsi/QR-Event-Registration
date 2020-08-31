@@ -62,30 +62,29 @@ export default function RegisterScreen({ navigation, route }) {
   return (
     <ScrollView style={styles.outerContainer}>
       <View style={styles.innerContainer}>
-        <Text style={Typography.title}>Registration form for</Text>
+        <Text style={Typography.title}>Registration for</Text>
         <Text style={Typography.heading}>{event.title}</Text>
       </View>
       <Formik
         initialValues={{
-          name: 'raj mehrotra',
-          college: 'saoe',
-          number: '7594137638',
-          email: 'raj@gmail.com',
+          name: '',
+          college: '',
+          number: '',
+          email: '',
         }}
         validationSchema={submitSchema}
         onSubmit={async (values) => {
           setIsSubmitting(true);
-          console.log('aaya');
           if (isPaid) {
             const data = {
               ...values,
-              volunteer: user?.displayName,
+              volunteer: user?.email,
               event: event.title,
               slot: new Date(event.slots[slot].toDate()).toLocaleString(),
             };
             const response = await registerParticipant(data, event.id);
             if (response) {
-              await navigation.navigate('QRDisplayScreen', {
+              await navigation.navigate('QRDisplay', {
                 id: response,
                 details: data,
                 event,
@@ -96,6 +95,7 @@ export default function RegisterScreen({ navigation, route }) {
           } else {
             alert('Payment is not completed!');
           }
+          setIsSubmitting(false);
         }}>
         {(props) => (
           <View>
@@ -149,7 +149,7 @@ export default function RegisterScreen({ navigation, route }) {
                   value={isPaid}
                   onValueChange={(val) => setIsPaid(val)}
                 />
-                <Text style={styles.labels}>Paid ₹{event.price}?</Text>
+                <Text style={styles.labels}>Paid {event.price}?</Text>
               </View>
             </TouchableWithoutFeedback>
 

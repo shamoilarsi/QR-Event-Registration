@@ -8,34 +8,35 @@ import NetInfo from '@react-native-community/netinfo';
 import NoInternet from './src/components/NoInternet';
 import DataContext from './src/contexts/DataContext';
 
+/* This file contains all the Firestore functions and initializes the DataContext */
+
 const App = () => {
   const [user, setUser] = useState(null);
   const [firebaseDetails, setFirebaseDetails] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(true); //set false here by default
+  const [isAdmin, setIsAdmin] = useState(true); // TODO: set false by default
   const [isConnected, setIsConnected] = useState(true);
   const [registrations, setRegistrations] = useState(null);
 
+  // Subscribed to check for internet connectivity
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
       setIsConnected(state.isInternetReachable);
     });
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, []);
 
-  // Handle Google SignIn here
+  // Handle Social-Media SignIn here
   async function AnonymousLogin() {
     return auth().signInAnonymously();
   }
 
   useEffect(() => {
     (async () => {
-      const { user } = await AnonymousLogin();
-      setUser(user.providerData[0]);
-      console.log(user);
+      const { user: localUser } = await AnonymousLogin();
+      setUser(localUser.providerData[0]);
     })();
 
+    // get all events data from the details document
     (async () => {
       let collection = await Firestore()
         .collection('demo-event')
@@ -47,12 +48,14 @@ const App = () => {
     })();
   }, []);
 
-  // uncomment this to setAdmin when using GoogleLogin
-  // useEffect(() => {
-  //   if (firebaseDetails && user)
-  //     setIsAdmin(firebaseDetails.admins.includes(user.email));
-  // }, [firebaseDetails, user]);
+  // whenever firebaseDetails and user are updated, a useEffect is triggered to check for admin rights
+  useEffect(() => {
+    if (firebaseDetails && user) {
+      setIsAdmin(firebaseDetails.admins.includes(user.email));
+    }
+  }, [firebaseDetails, user]);
 
+  // if isAdmin state is changed, the registration document is fetched
   useEffect(() => {
     if (isAdmin) {
       const unsubscribe = Firestore()
@@ -66,15 +69,25 @@ const App = () => {
     }
   }, [isAdmin]);
 
+  // registering a user for an event
   const registerParticipant = async (data, eventId) => {
     if (isConnected) {
+      // generating a random id
       const id = Math.random().toString(36).substring(8);
 
       await Firestore()
         .collection('demo-event')
         .doc('registrations')
         .set(
-          { [eventId]: { [id]: { ...data, attended: false } } },
+          {
+            [eventId]: {
+              [id]: {
+                ...data,
+                attended: false,
+                timestamp: Firestore.FieldValue.serverTimestamp(),
+              },
+            },
+          },
           { merge: true },
         );
       return `${eventId}/${id}`;
@@ -83,6 +96,7 @@ const App = () => {
     return false;
   };
 
+  // when QR is scanned and confirmed, attendance of the user is marked
   const setAttended = async (eventId, id) => {
     await Firestore()
       .collection('demo-event')

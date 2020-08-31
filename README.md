@@ -1,11 +1,46 @@
-# Event Registration
-A QR based registration system for college level competitions!
+## Event Registration
 
-This app is developed using React Native and Firebase
+A QR based registration system for events and competitions!
 
-### To use this app in your college,  
-1. Change the SignIn method. Currently it is SignIn Anonymously which is not secure.
-2. Change the `google-services.json` file in android/app to link to your firestore database.
-3. All restrictions for specific features (like onlt admins can use Scan option) are disabled. Make the changes at required places.
-4. While registering, change the value to `user.displayName` where displayName being the name of the user logged in. 
-5. Uncomment code to set `isAdmin` when user is logged in with the email of one of the admins 
+### Tech Stack and Packages used
+
+- React Native (Tested on Android only)
+- Firebase
+- [react-native-qrcode-scanner](https://www.npmjs.com/package/react-native-qrcode-scanner) - To scan QR codes.
+- [react-native-qrcode-svg](https://www.npmjs.com/package/react-native-qrcode-svg) - To generate QR codes.
+- [react-native-fs](https://www.npmjs.com/package/react-native-fs) - To export the report of registered students.
+- [react-native-responsive-fontsize](https://www.npmjs.com/package/react-native-responsive-fontsize) - For consistent font size across devices.
+- [Formik](https://formik.org/) - To handle form for registrations.
+
+### Steps to configure the app
+
+#### Clone the repository
+
+- Clone this repo to your local machine using `https://github.com/shamoilarsi/Event-Registration.git`
+- `cd` into the cloned directory.
+
+#### Install dependencies and run
+
+1. Make sure you have `node` and `yarn` installed.
+2. Run `yarn install` to install all dependencies.
+3. Follow [this](https://www.tutorialspoint.com/react_native/react_native_environment_setup.htm) tutorial to setup React Native environment.
+4. Run `yarn start` to start the metro bundler, in a dedicated terminal.
+5. Run `yarn android` to run the Android application (remember to start a simulator or connect an Android phone).
+
+#### Configure App
+
+1. Currently sign-in method is anonymous. Consider using Google Auth for sign-in. [Learn more](https://rnfirebase.io/auth/social-auth#google)
+2. Add the `google-services.json` file in android/app to link to your Firestore. [Learn more](https://rnfirebase.io/#2-android-setup)
+
+### To-Do
+
+- A better and consistent UI/UX.
+- Notify registrant with the unique QR code and the registration id.
+- Add a screen to view report.
+- Find a better method of exporting the report.
+- Option to call the coordinators of events directly.
+- Add payment methods so registrants can directly register themselves.
+
+### Contribute
+
+Feel free to raise an issue or create a PR. Looking forward for contributions.

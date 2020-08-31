@@ -10,6 +10,7 @@ import {
   Button,
   Modal,
   ScrollView,
+  ToastAndroid,
 } from 'react-native';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
@@ -22,11 +23,11 @@ const { width } = Dimensions.get('screen');
 let eventId = null;
 let id = null;
 
-export default function QRScanScreen() {
+export default function QRScanScreen({ navigation }) {
   const { registrations, setAttended } = useContext(DataContext);
   const [input, setInput] = useState('');
 
-  const [successfullyRead, setSuccessfullyRead] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [registrationData, setRegistrationData] = useState({});
   const [isFetching, setIsFetching] = useState(false);
 
@@ -37,22 +38,22 @@ export default function QRScanScreen() {
     id = parts[1];
 
     if (!registrations) {
-      alert("you're not an admin. not allowed get lost");
+      alert('Please try later...');
       return;
     }
+
     if (id in registrations[eventId]) {
-      console.log('aaja bhai', registrations[eventId][id]);
-      setSuccessfullyRead(true);
+      setShowModal(true);
       setRegistrationData(registrations[eventId][id]);
     } else {
-      console.log(" you didn't register. get lost pls");
+      alert('Not registered!!');
     }
   };
 
   return (
     <ScrollView>
       <QRCodeScanner
-        reactivate
+        reactivate={false}
         onRead={(data) => onSubmit(data.data)}
         topContent={<Text style={styles.centerText}>Scan the QR Code</Text>}
         bottomContent={
@@ -75,7 +76,7 @@ export default function QRScanScreen() {
         <Modal
           animationType="fade"
           transparent={true}
-          visible={successfullyRead}
+          visible={showModal}
           onRequestClose={() => {
             // onclose
           }}>
@@ -83,7 +84,7 @@ export default function QRScanScreen() {
             <View style={styles.modalView}>
               <View style={styles.mainText}>
                 <Text style={styles.modalTitle}>{registrationData.event}</Text>
-                <Text style={Typography.label}>
+                <Text style={styles.modalKeys}>
                   Name -{' '}
                   <Text
                     style={[
@@ -94,20 +95,20 @@ export default function QRScanScreen() {
                     {registrationData.name}
                   </Text>
                 </Text>
-                <Text style={Typography.label}>
+                <Text style={styles.modalKeys}>
                   Slot -{' '}
                   <Text style={styles.modalValues}>
                     {registrationData.slot}
                   </Text>
                 </Text>
-                <Text style={Typography.label}>
+                <Text style={styles.modalKeys}>
                   College -{' '}
                   <Text style={styles.modalValues}>
                     {registrationData.college}
                   </Text>
                 </Text>
 
-                <Text style={Typography.label}>
+                <Text style={styles.modalKeys}>
                   Number -{' '}
                   <Text style={styles.modalValues}>
                     {registrationData.number}
@@ -121,19 +122,22 @@ export default function QRScanScreen() {
                     backgroundColor: Colors.primary.red,
                   }}
                   onPress={() => {
-                    setSuccessfullyRead(false);
+                    setShowModal(false);
                     setIsFetching(false);
                   }}>
-                  <Text style={styles.textStyle}>Cancel</Text>
+                  <Text style={styles.textStyle}>Cancel </Text>
                 </TouchableHighlight>
                 <TouchableHighlight
                   style={styles.modalButton}
                   onPress={() => {
                     setAttended(eventId, id);
-                    setSuccessfullyRead(false);
+                    setShowModal(false);
                     setIsFetching(false);
+
+                    ToastAndroid.show('Attendance marked', ToastAndroid.SHORT);
+                    navigation.navigate('Home');
                   }}>
-                  <Text style={styles.textStyle}>Confirm</Text>
+                  <Text style={styles.textStyle}>Confirm </Text>
                 </TouchableHighlight>
               </View>
             </View>
@@ -165,12 +169,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
   },
-  modalTitle: { ...Typography.title, fontSize: 18 },
-  modalValues: { fontWeight: '700', fontSize: 15 },
+  modalTitle: { ...Typography.title, fontSize: 21, marginBottom: 10 },
+  modalValues: { fontWeight: '700', fontSize: 17 },
+  modalKeys: { ...Typography.label, fontSize: 17 },
   modalButtonContainer: {
+    marginLeft: 15,
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '70%',
+  },
+  modalButton: {
+    backgroundColor: '#2196F3',
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
   },
   centerText: {
     flex: 1,
@@ -211,12 +223,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   mainText: { marginBottom: 30 },
-  modalButton: {
-    backgroundColor: '#2196F3',
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
+
   textStyle: {
     color: 'white',
     fontWeight: 'bold',

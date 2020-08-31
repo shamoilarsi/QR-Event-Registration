@@ -32,7 +32,7 @@ export default function EventScreen({ navigation, route }) {
         <Image style={styles.image} source={{ uri: image }} />
         <Text style={Typography.heading}>{title}</Text>
         <Text style={Typography.eventDesc}>{description}</Text>
-        <Text style={styles.section}>Price: ₹{price}</Text>
+        <Text style={styles.section}>Price: {price}</Text>
 
         {prizes && (
           <>
@@ -64,6 +64,10 @@ export default function EventScreen({ navigation, route }) {
                 {val.name} - {val.number}
               </Text>
             ))}
+            <Text style={{ ...Typography.eventDesc, fontSize: 14 }}>
+              For any doubts or registration, feel free to contact the
+              coordinators.
+            </Text>
           </>
         )}
 
@@ -83,7 +87,7 @@ export default function EventScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  image: { width, height: height / 4, borderRadius: 10 },
+  image: { width: width - 20, height: height / 4, borderRadius: 10 },
   section: {
     ...Typography.title,
     marginTop: 20,

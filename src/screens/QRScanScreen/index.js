@@ -65,7 +65,7 @@ export default function QRScanScreen({ navigation }) {
             />
             <Button
               disabled={isFetching}
-              title="submit"
+              title="submit "
               onPress={() => onSubmit(input)}
             />
           </View>

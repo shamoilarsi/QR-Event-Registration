@@ -2,7 +2,9 @@
 
 A QR based registration system for events and competitions!
 
-### Screenshots
+### User Journey
+
+You can find a live demo [here](https://linkedIn.com/in/shamoilarsi)
 
 ### Tech Stack and Packages used
 
@@ -36,6 +38,7 @@ A QR based registration system for events and competitions!
 
 #### Firestore Schema
 
+You can find the structure of the Firestore in `other/FirestoreExample.txt` file.
 
 ### To-Do
 

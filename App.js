@@ -7,6 +7,7 @@ import NetInfo from '@react-native-community/netinfo';
 
 import NoInternet from './src/components/NoInternet';
 import DataContext from './src/contexts/DataContext';
+import FirestoreConfig from './src/constants/Firestore';
 
 /* This file contains all the Firestore functions and initializes the DataContext */
 
@@ -39,8 +40,8 @@ const App = () => {
     // get all events data from the details document
     (async () => {
       let collection = await Firestore()
-        .collection('demo-event')
-        .doc('details')
+        .collection(FirestoreConfig.collection)
+        .doc(FirestoreConfig.documentDetails)
         .get();
 
       collection = collection.data();
@@ -59,8 +60,8 @@ const App = () => {
   useEffect(() => {
     if (isAdmin) {
       const unsubscribe = Firestore()
-        .collection('demo-event')
-        .doc('registrations')
+        .collection(FirestoreConfig.collection)
+        .doc(FirestoreConfig.documentRegistrations)
         .onSnapshot((doc) => {
           setRegistrations(doc.data());
         });
@@ -76,15 +77,15 @@ const App = () => {
       const id = Math.random().toString(36).substring(8);
 
       await Firestore()
-        .collection('demo-event')
-        .doc('registrations')
+        .collection(FirestoreConfig.collection)
+        .doc(FirestoreConfig.documentRegistrations)
         .set(
           {
             [eventId]: {
               [id]: {
                 ...data,
                 attended: false,
-                timestamp: Firestore.FieldValue.serverTimestamp(),
+                timestamp: new Date().toLocaleString(),
               },
             },
           },
@@ -99,8 +100,8 @@ const App = () => {
   // when QR is scanned and confirmed, attendance of the user is marked
   const setAttended = async (eventId, id) => {
     await Firestore()
-      .collection('demo-event')
-      .doc('registrations')
+      .collection(FirestoreConfig.collection)
+      .doc(FirestoreConfig.documentRegistrations)
       .set({ [eventId]: { [id]: { attended: true } } }, { merge: true });
   };
 

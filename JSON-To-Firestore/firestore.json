@@ -1,0 +1,59 @@
+{
+  "collectionName": "demo",
+  "documentName": "details",
+  "data": {
+    "admins": ["email1", "email2", "email3"],
+    "events": [
+      {
+        "title": "Demo Event",
+        "id": "demo_event",
+        "coordinators": [
+          {
+            "name": "Admin1",
+            "number": "1234567890"
+          },
+          {
+            "name": "Admin2",
+            "number": "0987654321"
+          }
+        ],
+        "slots": [1597775400000, 1598553000000],
+        "prizes": [
+          {
+            "title": "1st",
+            "reward": "₹100"
+          },
+          {
+            "title": "2nd",
+            "reward": "₹50"
+          },
+          {
+            "title": "3rd",
+            "reward": "₹20"
+          }
+        ],
+        "price": "₹150",
+        "description": "Lorem ipsum dolor sit amet, consectetur",
+        "image": "https://drive.google.com/file/d/1NFQf8ggQ2LG8RuI5Uk7C8K7DLkXhj3f5/view?usp=sharing"
+      },
+      {
+        "title": "Code Jam",
+        "id": "code_jam",
+        "slots": [1597084200000, 1598293800000],
+        "coordinators": [
+          {
+            "name": "Admin3",
+            "number": "63210987"
+          },
+          {
+            "name": "Admin4",
+            "number": "1234567890"
+          }
+        ],
+        "image": "https://drive.google.com/file/d/1AGHFHMtW0HqLq7k_lEDMTSrd4L8aTk-x/view?usp=sharing",
+        "description": "Lorem ipsum dolor sit amet",
+        "price": "₹100"
+      }
+    ]
+  }
+}

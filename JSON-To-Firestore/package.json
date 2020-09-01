@@ -1,0 +1,9 @@
+{
+  "name": "other",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "firebase": "^7.19.1"
+  }
+}

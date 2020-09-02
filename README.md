@@ -16,28 +16,28 @@ You can also download the app to test [here]()
 
 -  #### Clone the repository
 
-  - Clone this repo to your local machine using `https://github.com/shamoilarsi/Event-Registration.git`
-  - `cd` into the cloned directory.
+    - Clone this repo to your local machine using `https://github.com/shamoilarsi/Event-Registration.git`
+    - `cd` into the cloned directory.
 
 -  #### Install dependencies and run
 
-  1. Make sure you have `node` and `yarn` installed.
-  2. Run `yarn install` to install all dependencies.
-  3. Follow [this](https://www.tutorialspoint.com/react_native/react_native_environment_setup.htm) tutorial to setup React Native environment.
-  4. Run `yarn start` to start the metro bundler, in a dedicated terminal.
-  5. Run `yarn android` to run the Android application (remember to start a simulator or connect an Android phone).
+    1. Make sure you have `node` and `yarn` installed.
+    2. Run `yarn install` to install all dependencies.
+    3. Follow [this](https://www.tutorialspoint.com/react_native/react_native_environment_setup.htm) tutorial to setup React Native environment.
+    4. Run `yarn start` to start the metro bundler, in a dedicated terminal.
+    5. Run `yarn android` to run the Android application (remember to start a simulator or connect an Android phone).
 
 -  #### Configure App
 
-  1. Currently sign-in method is anonymous. Consider using Google Auth for sign-in. [Learn more](https://rnfirebase.io/auth/social-auth#google)
-  2. Add the `google-services.json` file in android/app to link to your Firestore. [Learn more](https://rnfirebase.io/#2-android-setup)
+    1. Currently sign-in method is anonymous. Consider using Google Auth for sign-in. [Learn more](https://rnfirebase.io/auth/social-auth#google)
+    2. Add the `google-services.json` file in android/app to link to your Firestore. [Learn more](https://rnfirebase.io/#2-android-setup)
 
 -  #### Firestore Schema
-  1. Go to Firebase console and add your app as a WebApp. On completing this, paste the values of the config json in `uploadEventDetails.js`.
-  2. Run `yarn install` in `JSON-To-Firestore` directory. 
-  3. To add events, you can add them to the `JSON-To-Firestore/firestore.json` file.
-  4. After finalising the events, Run `node uploadEventDetails.js` to upload the changes.
-  5. Also make sure to make the appropriate changes in the `constants/firestore.js` file.
+    1. Go to Firebase console and add your app as a WebApp. On completing this, paste the values of the config json in `uploadEventDetails.js`.
+    2. Run `yarn install` in `JSON-To-Firestore` directory. 
+    3. To add events, you can add them to the `JSON-To-Firestore/firestore.json` file.
+    4. After finalising the events, Run `node uploadEventDetails.js` to upload the changes.
+    5. Also make sure to make the appropriate changes in the `constants/firestore.js` file.
 
 ### To-Do
 

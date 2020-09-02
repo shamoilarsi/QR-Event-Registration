@@ -113,7 +113,6 @@ const App = () => {
           firebaseDetails,
           isAdmin,
           registerParticipant,
-          isConnected,
           registrations,
           setAttended,
         }}>

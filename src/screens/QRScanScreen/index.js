@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,6 +10,7 @@ import {
   Button,
   Modal,
   ScrollView,
+  Alert,
   ToastAndroid,
 } from 'react-native';
 
@@ -25,14 +26,21 @@ let id = null;
 
 export default function QRScanScreen({ navigation }) {
   const { registrations, setAttended } = useContext(DataContext);
+  const QRRef = useRef();
   const [input, setInput] = useState('');
 
   const [showModal, setShowModal] = useState(false);
   const [registrationData, setRegistrationData] = useState({});
-  const [isFetching, setIsFetching] = useState(false);
+  const [canSubmit, setCanSubmit] = useState(true);
+
+  const afterScan = () => {
+    setShowModal(false);
+    setCanSubmit(true);
+    QRRef.current.reactivate();
+  };
 
   const onSubmit = (code) => {
-    setIsFetching(true);
+    setCanSubmit(false);
     const parts = code.split('/');
     eventId = parts[0];
     id = parts[1];
@@ -42,17 +50,33 @@ export default function QRScanScreen({ navigation }) {
       return;
     }
 
-    if (id in registrations[eventId]) {
-      setShowModal(true);
-      setRegistrationData(registrations[eventId][id]);
-    } else {
-      alert('Not registered!!');
+    if (registrations[eventId]) {
+      if (id in registrations[eventId]) {
+        setShowModal(true);
+        setRegistrationData(registrations[eventId][id]);
+        return;
+      }
     }
+
+    Alert.alert(
+      'Code is not valid',
+      'Type/Scan the code again',
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            QRRef.current.reactivate();
+          },
+        },
+      ],
+      { cancelable: false },
+    );
   };
 
   return (
     <ScrollView>
       <QRCodeScanner
+        ref={QRRef}
         reactivate={false}
         onRead={(data) => onSubmit(data.data)}
         topContent={<Text style={styles.centerText}>Scan the QR Code</Text>}
@@ -64,7 +88,7 @@ export default function QRScanScreen({ navigation }) {
               onChangeText={(text) => setInput(text)}
             />
             <Button
-              disabled={isFetching}
+              disabled={!canSubmit}
               title="submit "
               onPress={() => onSubmit(input)}
             />
@@ -73,13 +97,7 @@ export default function QRScanScreen({ navigation }) {
         cameraStyle={styles.cameraStyle}
       />
       <View style={styles.centeredView}>
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={showModal}
-          onRequestClose={() => {
-            // onclose
-          }}>
+        <Modal animationType="fade" transparent={true} visible={showModal}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <View style={styles.mainText}>
@@ -122,8 +140,7 @@ export default function QRScanScreen({ navigation }) {
                     backgroundColor: Colors.primary.red,
                   }}
                   onPress={() => {
-                    setShowModal(false);
-                    setIsFetching(false);
+                    afterScan();
                   }}>
                   <Text style={styles.textStyle}>Cancel </Text>
                 </TouchableHighlight>
@@ -131,11 +148,9 @@ export default function QRScanScreen({ navigation }) {
                   style={styles.modalButton}
                   onPress={() => {
                     setAttended(eventId, id);
-                    setShowModal(false);
-                    setIsFetching(false);
-
+                    afterScan();
                     ToastAndroid.show('Attendance marked', ToastAndroid.SHORT);
-                    navigation.navigate('Home');
+                    // navigation.navigate('Home');
                   }}>
                   <Text style={styles.textStyle}>Confirm </Text>
                 </TouchableHighlight>

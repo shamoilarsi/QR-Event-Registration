@@ -7,6 +7,13 @@ A QR based registration system for events and competitions!
 - You can find a live demo [here](https://linkedIn.com/in/shamoilarsi)
 - You can also download the app to test [here](https://drive.google.com/file/d/1Yul7poaKJm7T3Z9q-jDp2DRR8NmTn2A1/view?usp=sharing)
 
+### Introduction
+Hey, I've been a part of many college events, workshops and seminars. While they have been amazing, their registration process has always been on pen and paper. This makes it difficult to keep track of the number of registrations and the data of those who have registered. 
+On top of that, this sheet can get lost or torn. 
+
+To solve this issue and make the whole process of registrations easier, I've developed an Android app to manage registrations using QR codes.
+
+
 ### Tech Stack used
 
 - React Native

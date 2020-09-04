@@ -42,7 +42,7 @@ export default function QRScanScreen({ navigation }) {
   const onSubmit = (code) => {
     setCanSubmit(false);
     const parts = code.split('/');
-    eventId = parts[0];
+    eventId = parts[0].toLowerCase();
     id = parts[1];
 
     if (!registrations) {

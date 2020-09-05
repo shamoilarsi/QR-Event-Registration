@@ -56,6 +56,7 @@ To solve this issue and make the whole process of registrations easier, I've dev
 - Option to call the coordinators of events directly.
 - Add payment methods so registrants can directly register themselves.
 
-### Contribute
-
-Feel free to raise an issue or create a PR. Looking forward for contributions.
+### Forking and Contribution
+- If you are planning to make design changes or implement new features for your event, consider creating a PR too so that others can benefit from it.
+- Feel free to raise an issue if you find any bugs or have suggestions.
+Looking forward for contributions. 💯 ✨

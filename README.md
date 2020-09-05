@@ -4,7 +4,7 @@ A QR based registration system for events and competitions!
 
 ### Demo
 
-- You can find a live demo [here](https://linkedIn.com/in/shamoilarsi)
+- You can find a live demo [here](https://www.linkedin.com/posts/shamoilarsi_github-reactnative-firebase-ugcPost-6707919741593415680-fYWw)
 - You can also download the app to test [here](https://drive.google.com/file/d/1Yul7poaKJm7T3Z9q-jDp2DRR8NmTn2A1/view?usp=sharing)
 
 ### Introduction

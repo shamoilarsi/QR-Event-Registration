@@ -36,9 +36,10 @@ To solve this issue and make the whole process of registrations easier, I've dev
 
 - #### Configure App
 
-  1. Currently sign-in method is anonymous. Consider using Google Auth for sign-in. [Learn more](https://rnfirebase.io/auth/social-auth#google)
-  2. Add the `google-services.json` file in android/app to link to your Firestore. [Learn more](https://rnfirebase.io/#2-android-setup)
-
+  1. Add the `google-services.json` file in android/app to link to your Firestore. [Learn more](https://rnfirebase.io/#2-android-setup)
+  2. Currently sign-in method is anonymous. Consider using Google Auth for sign-in. [Learn more](https://rnfirebase.io/auth/social-auth#google)
+  
+  
 - #### Firestore Schema
 
   1. Go to Firebase console and add your app as a WebApp. On completing this, paste the values of the config json in `uploadEventDetails.js`.

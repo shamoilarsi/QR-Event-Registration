@@ -34,7 +34,7 @@
         ],
         "price": "₹150",
         "description": "Lorem ipsum dolor sit amet, consectetur",
-        "image": "https://drive.google.com/file/d/1NFQf8ggQ2LG8RuI5Uk7C8K7DLkXhj3f5/view?usp=sharing"
+        "image": "https://firebasestorage.googleapis.com/v0/b/fir-554e8.appspot.com/o/Events.jpg?alt=media&token=ff377790-189a-4c15-8dd9-a740660310fe"
       },
       {
         "title": "Code Jam",
@@ -50,7 +50,7 @@
             "number": "1234567890"
           }
         ],
-        "image": "https://drive.google.com/file/d/1AGHFHMtW0HqLq7k_lEDMTSrd4L8aTk-x/view?usp=sharing",
+        "image": "https://firebasestorage.googleapis.com/v0/b/fir-554e8.appspot.com/o/Events.jpg?alt=media&token=ff377790-189a-4c15-8dd9-a740660310fe",
         "description": "Lorem ipsum dolor sit amet",
         "price": "₹100"
       }
